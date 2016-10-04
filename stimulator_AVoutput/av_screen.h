@@ -10,6 +10,7 @@
 class AVScreen  {
 public:
     explicit AVScreen();
+    ~AVScreen();
     void loadConfig(ScreenConfig *screenConfig);
 
 private:

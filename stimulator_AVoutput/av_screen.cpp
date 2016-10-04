@@ -23,3 +23,9 @@ void AVScreen::loadConfig(ScreenConfig *screenConfig) {
 
     }
 }
+
+AVScreen::~AVScreen() {
+    SDL_FreeSurface(surface);
+    SDL_free(window);
+
+}

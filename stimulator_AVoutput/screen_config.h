@@ -12,12 +12,13 @@ public:
     int width,height;
     double volume;
 
-    std::vector<Output> outputs;
+
     struct Output {
         bool enabled;
         int type;
         std::string filename;
-    }
+    };
+    std::vector<Output> outputs;
 
 };
 
