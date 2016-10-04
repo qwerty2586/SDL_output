@@ -7,6 +7,7 @@
 class ScreenConfig {
 
 public:
+
     bool fullscreen;
     int width,height;
     double volume;
@@ -16,7 +17,8 @@ public:
         bool enabled;
         int type;
         std::string filename;
-    };
+    }
+
 };
 
 #endif //SDL_OUTPUT_SCREEN_CONFIG_H
