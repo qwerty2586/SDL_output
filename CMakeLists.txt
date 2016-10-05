@@ -14,4 +14,4 @@ link_directories(${SDL2_DIR}/lib)
 set(SOURCE_FILES stimulator_AVoutput/main.cpp stimulator_AVoutput/av_screen.cpp stimulator_AVoutput/av_screen.h stimulator_AVoutput/screen_config.cpp stimulator_AVoutput/screen_config.h)
 add_executable(SDL_output ${SOURCE_FILES})
 
-target_link_libraries(SDL_output SDL2main SDL2)
+target_link_libraries(SDL_output SDL2Main SDL2)
