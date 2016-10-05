@@ -7,6 +7,7 @@ int main( int argc, char* args[] ) {
         std::cout << "Something went wrong!" << SDL_GetError() << std::endl;
     } else {
         AVScreen *avScreen = new AVScreen();
+        SDL_Delay(1000);
         delete avScreen;
         SDL_Quit();
 
