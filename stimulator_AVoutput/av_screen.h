@@ -18,6 +18,8 @@ public:
 
     void activateOutput(int index);
 
+    void deactivateOutput();
+
 private:
 
     SDL_Window* window;

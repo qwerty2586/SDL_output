@@ -44,9 +44,15 @@ void testLoop(AVScreen* avScreen) {
                 case SDLK_5: { avScreen->activateOutput(5); break; }
                 case SDLK_6: { avScreen->activateOutput(6); break; }
                 case SDLK_7: { avScreen->activateOutput(7); break; }
-                case SDLK_c: { avScreen->clearScreen();     break; }
 
+            }
+        }
+        if (event.type == SDL_KEYUP) {
+            switch (event.key.keysym.sym) {
+
+                case SDLK_c: { avScreen->clearScreen();     break; }
                 case SDLK_q: { exitLoop = true; break; }
+                default:  { avScreen->deactivateOutput(); break; }
             }
         }
     }
