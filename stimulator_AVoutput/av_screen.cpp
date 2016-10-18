@@ -1,10 +1,12 @@
 
 #include "av_screen.h"
 #include <SDL2/SDL_image.h>
+#include <c++/iostream>
 
 AVScreen::AVScreen() {
-    window = SDL_CreateWindow("SDL_test",SDL_WINDOWPOS_UNDEFINED,SDL_WINDOWPOS_UNDEFINED,width,height,SDL_WINDOW_OPENGL);
+    window = SDL_CreateWindow("AVScreen",SDL_WINDOWPOS_UNDEFINED,SDL_WINDOWPOS_UNDEFINED,width,height,SDL_WINDOW_OPENGL);
     surface = SDL_GetWindowSurface( window );
+    Mix_OpenAudio(MIX_DEFAULT_FREQUENCY,MIX_DEFAULT_FORMAT,MIX_DEFAULT_CHANNELS,1024);
 }
 
 void AVScreen::loadConfig(ScreenConfig *screenConfig) {
@@ -34,17 +36,18 @@ void AVScreen::loadConfig(ScreenConfig *screenConfig) {
                 rect->w = (int)((double)height * ratio);
                 rect->x = (width - rect->w) /2;
                 rect->y = 0;
-
             } else {
                 rect->w = width;
                 rect->h = (int)((double)width / ratio);
                 rect->x = 0;
                 rect->y = (height - rect->h) / 2;
             }
-
-            int val = SDL_UpperBlitScaled(temp, NULL,images[i],rect);
+            SDL_UpperBlitScaled(temp, NULL,images[i],rect);
             SDL_FreeSurface(temp);
             delete rect;
+        }
+        if (types[i] == ScreenConfig::TYPE_AUDIO) {
+            audios[i] = Mix_LoadMUS(screenConfig->outputs[i].filename.c_str());
         }
 
     }
@@ -56,6 +59,7 @@ AVScreen::~AVScreen() {
     SDL_FreeSurface(surface);
     SDL_DestroyWindow(window);
     SDL_free(window);
+    Mix_CloseAudio();
 
 }
 
@@ -65,18 +69,26 @@ void AVScreen::clearScreen() {
 }
 
 void AVScreen::activateOutput(int index) {
-    if (types[index] == ScreenConfig::TYPE_IMAGE) {
+    std::cout << index << std::endl;
+    if (index==NO_OUTPUT) {
+        if (types[activeOutput]==ScreenConfig::TYPE_IMAGE) {
+            clearScreen();
+        } else if (types[activeOutput] == ScreenConfig::TYPE_AUDIO) {
+            //Mix_PauseMusic();
+        }
+
+    }
+    else if (types[index] == ScreenConfig::TYPE_IMAGE) {
         SDL_BlitSurface(images[index], nullptr, surface, nullptr);
         SDL_UpdateWindowSurface(window);
+    }
+    else if (types[index] == ScreenConfig::TYPE_AUDIO) {
+        Mix_PlayMusic(audios[index],1);
     }
     activeOutput = index;
 
 }
 
 void AVScreen::deactivateOutput() {
-    if (types[activeOutput] == ScreenConfig::TYPE_IMAGE) {
-        clearScreen();
-    }
-    activeOutput = NO_OUTPUT;
-
+    activateOutput(NO_OUTPUT);
 }
