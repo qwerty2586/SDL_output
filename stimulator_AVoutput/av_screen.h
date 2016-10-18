@@ -7,18 +7,28 @@
 #define DEFAULT_WIDTH 640
 #define DEFAULT_HEIGHT 480
 
+#define OUTPUT_MAX_COUNT 8
+
 class AVScreen  {
 public:
     explicit AVScreen();
     ~AVScreen();
     void loadConfig(ScreenConfig *screenConfig);
+    void clearScreen();
+
+    void activateOutput(int index);
 
 private:
+
     SDL_Window* window;
     SDL_Surface* surface;
     int width = DEFAULT_WIDTH;
     int height = DEFAULT_HEIGHT;
-
+    SDL_Surface* images[OUTPUT_MAX_COUNT];
+    SDL_Surface* audios[OUTPUT_MAX_COUNT];
+    int types[OUTPUT_MAX_COUNT];
+    static constexpr int NO_OUTPUT = -1;
+    int activeOutput = NO_OUTPUT;
 
 };
 

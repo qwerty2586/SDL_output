@@ -7,6 +7,12 @@
 class ScreenConfig {
 
 public:
+    static const int TYPE_UNKNOWN = 0;
+    static const int TYPE_IMAGE = 1;
+    static const int TYPE_AUDIO = 2;
+    static const int TYPE_VIDEO = 3;
+    static const int TYPE_OTHER = 4;
+
 
     bool fullscreen;
     int width,height;
