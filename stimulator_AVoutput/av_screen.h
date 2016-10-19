@@ -20,8 +20,6 @@ public:
     void activateOutput(int index);
     static constexpr int NO_OUTPUT = -1;
 
-    void deactivateOutput();
-
 private:
 
     SDL_Window *window;

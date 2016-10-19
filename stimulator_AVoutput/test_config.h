@@ -64,8 +64,8 @@ void testLoop(AVScreen* avScreen) {
                             avScreen->activateOutput(now);
                             last = now;
                         }
-
-                        break; }
+                        break;
+                    }
                 }
             }
         }
