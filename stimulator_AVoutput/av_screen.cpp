@@ -96,6 +96,3 @@ void AVScreen::activateOutput(int index) {
 
 }
 
-void AVScreen::deactivateOutput() {
-    activateOutput(NO_OUTPUT);
-}
