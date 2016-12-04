@@ -33,8 +33,11 @@ void testLoop(AVScreen* avScreen) {
 
     int last=-2;
     int now =-2;
+
     while (!exitLoop) {
-        while(SDL_PollEvent(&event)){
+       // SDL_WaitEvent()
+        while(SDL_WaitEvent(&event)){
+            std::cout << ".";
             if(event.type == SDL_QUIT  ||  event.key.keysym.scancode == SDL_SCANCODE_ESCAPE)
                 return ;
             else if (event.type == SDL_KEYDOWN) {
