@@ -19,6 +19,9 @@ if (WIN32)
 else () 
 	set(SDL2_INCLUDE_DIR "/usr/include/SDL2")
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -lpthread")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -lwiringPi")
+
+
 endif ()
 
 
@@ -32,6 +35,7 @@ endif ()
 if (LINUX)
 #	find_package(SDL2 REQUIRED SDL2_image SDL2_mixer)
 #	include_directories(${SDL2_INCLUDE_DIR})
+
 include (FindPkgConfig)
 pkg_search_module(SDL2 REQUIRED sdl2 SDL_Main)
 pkg_search_module(SDL2MIXER REQUIRED SDL2_mixer)

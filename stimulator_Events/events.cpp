@@ -1,12 +1,17 @@
 #include <SDL2/SDL_events.h>
 #include <iostream>
 #include "events.h"
+#include <wiringPi.h>
 
 bool Events::start() {
     if (running) return false;
     if (gpio_event_type ==((Uint32)-1)) gpio_event_type = SDL_RegisterEvents(1);
     gpio_thread = std::thread([&]() { gpio_loop(); });
     gpio_thread.detach();
+    wiringPiSetup();
+    auto lmbd = wiringPiISR(0,INT_EDGE_BOTH,[]{
+
+    });
     return true;
 }
 
