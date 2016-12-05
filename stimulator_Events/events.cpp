@@ -38,6 +38,7 @@ int Events::get_event() {
                 case KEY_5: { key_now=EVENT_CODES::KEY_EVENT_5; break; }
                 case KEY_6: { key_now=EVENT_CODES::KEY_EVENT_6; break; }
                 case KEY_7: { key_now=EVENT_CODES::KEY_EVENT_7; break; }
+                default: break;
             }
             if (key_now != key_last) {
                 key_last = key_now;
@@ -78,7 +79,7 @@ void Events::setup_interrupt() {
     pinMode (PIN_1, INPUT);
     pinMode (PIN_2, INPUT);
     pinMode (PIN_3, INPUT);
-    wiringPiISR(PIN_0,INT_EDGE_BOTH,[]{
+    wiringPiISR(PIN_0,INT_EDGE_BOTH,[](int gpio_event_type){
         int pin_0_state = digitalRead(PIN_0);
         int pin_1_state = digitalRead(PIN_1);
         int pin_2_state = digitalRead(PIN_2);
