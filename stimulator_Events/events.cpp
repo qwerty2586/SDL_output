@@ -86,7 +86,7 @@ void Events::setup_interrupt() {
         int pin_3_state = digitalRead(PIN_3);
         SDL_Event event;
         SDL_zero(event);
-        event.type = gpio_event_type;
+        event.type = Events::gpio_event_type;
         if (pin_0_state == HIGH) {
             event.user.code =
             EVENT_CODES::GPIO_EVENT_0 +

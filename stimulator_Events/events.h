@@ -55,7 +55,7 @@ namespace EVENT_CODES {
 
 }
 
-Uint32 gpio_event_type = ((Uint32)-1); // global
+static Uint32 gpio_event_type = ((Uint32)-1); // global
 
 class Events {
 
@@ -63,6 +63,7 @@ public:
     bool start();
     void stop();
     static Events& instance();
+
 
     int get_event(); // cekaci musi bezet v main threadu
 
