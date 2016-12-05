@@ -4,6 +4,7 @@
 
 #include <thread>
 
+
 #define KEY_0 SDLK_0
 #define KEY_1 SDLK_1
 #define KEY_2 SDLK_2
@@ -54,14 +55,13 @@ namespace EVENT_CODES {
 
 }
 
-
+Uint32 gpio_event_type = ((Uint32)-1); // global
 
 class Events {
 
 public:
     bool start();
     void stop();
-    Uint32 gpio_event_type = ((Uint32)-1);
     static Events& instance();
 
     int get_event(); // cekaci musi bezet v main threadu
@@ -72,7 +72,6 @@ protected:
 private:
     std::thread gpio_thread;
     void setup_interrupt();
-    void gpio_loop();
     int key_now = -1000;
     int key_last = -1000;
     bool running = false;

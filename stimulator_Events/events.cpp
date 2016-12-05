@@ -9,8 +9,6 @@
 bool Events::start() {
     if (running) return false;
     if (gpio_event_type ==((Uint32)-1)) gpio_event_type = SDL_RegisterEvents(1);
-    gpio_thread = std::thread([&]() { gpio_loop(); });
-    gpio_thread.detach();
     this->setup_interrupt();
     return true;
 }
@@ -67,11 +65,6 @@ int Events::get_event() {
     }
 }
 
-void Events::gpio_loop() {
-
-    // tady budou gpio eventy
-
-}
 
 Events &Events::instance() {
     static Events INSTANCE;
@@ -85,7 +78,7 @@ void Events::setup_interrupt() {
     pinMode (PIN_1, INPUT);
     pinMode (PIN_2, INPUT);
     pinMode (PIN_3, INPUT);
-    wiringPiISR(PIN_0,INT_EDGE_BOTH,[&]{
+    wiringPiISR(PIN_0,INT_EDGE_BOTH,[]{
         int pin_0_state = digitalRead(PIN_0);
         int pin_1_state = digitalRead(PIN_1);
         int pin_2_state = digitalRead(PIN_2);
