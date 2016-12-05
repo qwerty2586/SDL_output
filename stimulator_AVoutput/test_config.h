@@ -45,62 +45,21 @@ void testLoop(AVScreen* avScreen) {
                 break;
             case EVENT_CODES::KEY_EVENT_END: avScreen->activateOutput(AVScreen::NO_OUTPUT);
                 break;
+            case EVENT_CODES::GPIO_EVENT_0:
+            case EVENT_CODES::GPIO_EVENT_1:
+            case EVENT_CODES::GPIO_EVENT_2:
+            case EVENT_CODES::GPIO_EVENT_3:
+            case EVENT_CODES::GPIO_EVENT_4:
+            case EVENT_CODES::GPIO_EVENT_5:
+            case EVENT_CODES::GPIO_EVENT_6:
+            case EVENT_CODES::GPIO_EVENT_7: avScreen->activateOutput(event - EVENT_CODES::GPIO_EVENT_0);
+                break;
+            case EVENT_CODES::GPIO_EVENT_END: avScreen->activateOutput(AVScreen::NO_OUTPUT);
+                break;
             case EVENT_CODES::EXIT_KEY   :
                 return;
-
         }
     }
-
-
-/*
-
-    bool exitLoop = false;
-    SDL_Event event;
-
-    int key_last=-2;
-    int key_now =-2;
-
-    while (!exitLoop) {
-       // SDL_WaitEvent()
-        while(SDL_WaitEvent(&event)){
-            std::cout << ".";
-            if(event.type == SDL_QUIT  ||  event.key.keysym.scancode == SDL_SCANCODE_ESCAPE)
-                return ;
-            else if (event.type == SDL_KEYDOWN) {
-                switch (event.key.keysym.sym) {
-                    case SDLK_0: { key_now=0; break; }
-                    case SDLK_1: { key_now=1; break; }
-                    case SDLK_2: { key_now=2; break; }
-                    case SDLK_3: { key_now=3; break; }
-                    case SDLK_4: { key_now=4; break; }
-                    case SDLK_5: { key_now=5; break; }
-                    case SDLK_6: { key_now=6; break; }
-                    case SDLK_7: { key_now=7; break; }
-                }
-                if (key_now != key_last) {
-                    avScreen->activateOutput(key_now);
-                    key_last = key_now;
-                }
-            }
-            else if (event.type == SDL_KEYUP) {
-                switch (event.key.keysym.sym) {
-
-                    case SDLK_c: { avScreen->clearScreen();     break; }
-                    case SDLK_q: { exitLoop = true; break; }
-                    default:  {
-                        key_now = AVScreen::NO_OUTPUT;
-                        if (key_now != key_last) {
-                            avScreen->activateOutput(key_now);
-                            key_last = key_now;
-                        }
-                        break;
-                    }
-                }
-            }
-        }
-
-    }
-*/
 };
 
 

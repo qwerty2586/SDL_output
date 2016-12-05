@@ -15,6 +15,12 @@
 #define KEY_CLEAR SDLK_c
 #define KEY_EXIT_SCANCODE SDL_SCANCODE_ESCAPE
 
+
+#define PIN_0 0
+#define PIN_1 1
+#define PIN_2 2
+#define PIN_3 3
+
 namespace EVENT_CODES {
     static const int NOTHING = -100;
 
@@ -65,6 +71,7 @@ protected:
 
 private:
     std::thread gpio_thread;
+    void setup_interrupt();
     void gpio_loop();
     int key_now = -1000;
     int key_last = -1000;
