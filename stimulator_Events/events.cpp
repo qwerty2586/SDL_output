@@ -1,6 +1,7 @@
 #include <SDL2/SDL_events.h>
 #include <iostream>
 #include "events.h"
+// pouze na maline
 #ifdef __arm__
 #include <wiringPi.h>
 #endif
@@ -14,9 +15,7 @@ bool Events::start() {
 }
 
 void Events::stop() {
-    if (!running) return;
 
-    return;
 }
 
 
@@ -73,20 +72,21 @@ Events &Events::instance() {
 }
 
 void Events::setup_interrupt() {
+
 #ifdef __arm__
     wiringPiSetup();
     pinMode (PIN_0, INPUT);
     pinMode (PIN_1, INPUT);
     pinMode (PIN_2, INPUT);
     pinMode (PIN_3, INPUT);
-    wiringPiISR(PIN_0,INT_EDGE_BOTH,[](int gpio_event_type){
+    wiringPiISR(PIN_0,INT_EDGE_BOTH,[] {
         int pin_0_state = digitalRead(PIN_0);
         int pin_1_state = digitalRead(PIN_1);
         int pin_2_state = digitalRead(PIN_2);
         int pin_3_state = digitalRead(PIN_3);
         SDL_Event event;
         SDL_zero(event);
-        event.type = Events::gpio_event_type;
+        event.type = gpio_event_type;
         if (pin_0_state == HIGH) {
             event.user.code =
             EVENT_CODES::GPIO_EVENT_0 +
@@ -96,6 +96,7 @@ void Events::setup_interrupt() {
         } else {
             event.user.code = EVENT_CODES::GPIO_EVENT_END;
         }
+        // SDL_PushEvent je bezpecna, muze byt volana z jinych vlaken
         SDL_PushEvent(&event);
     });
 #endif

@@ -8,6 +8,8 @@
 #include "av_screen.h"
 #include "../stimulator_Events/events.h"
 
+
+/// testovaci konfigurace pomoci prilozenych souboru
 ScreenConfig* testConfig() {
     ScreenConfig* r = new ScreenConfig();
     r->fullscreen = false;
@@ -26,7 +28,7 @@ ScreenConfig* testConfig() {
     return r;
 
 }
-
+/// hlavni programova smycka, preklada SDL eventy na cinosti obrazovky
 void testLoop(AVScreen* avScreen) {
 
     Events &events =  Events::instance();

@@ -7,6 +7,8 @@
 class ScreenConfig {
 
 public:
+
+    // mozne typu vystupu zatim implementuji TYPE_IMAGE a TYPE_AUDIO
     static const int TYPE_UNKNOWN = 0;
     static const int TYPE_IMAGE = 1;
     static const int TYPE_AUDIO = 2;
@@ -19,11 +21,13 @@ public:
     double volume;
 
 
+    // prepravka s konfiguraci jednoho vystupu
     struct Output {
         bool enabled;
         int type;
         std::string filename;
     };
+
     std::vector<Output> outputs;
 
 };
