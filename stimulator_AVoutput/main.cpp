@@ -40,7 +40,7 @@ int main(int argc, char *argv[]) {
     ScreenConfig *screenConfig = new ScreenConfig();
     int c;
     char *config_filename = NULL;
-    while ((c = getopt_long(argc, argv, "fx:y:c:h", longOpts, NULL)) != -1) {
+    while ((c = getopt_long(argc, argv, "fwx:y:c:th", longOpts, NULL)) != -1) {
         switch (c) {
             case 'f':
                 screenConfig->fullscreen = true;
@@ -56,8 +56,10 @@ int main(int argc, char *argv[]) {
                 break;
             case 'c' :
                 config_filename = optarg;
+                break;
             case 't' :
                 screenConfig->test_enabled = true;
+                break;
             case 'h': // print help;
                 break;
         }
