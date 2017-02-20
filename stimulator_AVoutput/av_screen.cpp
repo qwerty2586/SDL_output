@@ -1,7 +1,7 @@
 
 #include "av_screen.h"
 #include <SDL2/SDL_image.h>
-#include <c++/iostream>
+
 
 AVScreen::AVScreen() {
     window = SDL_CreateWindow("AVScreen", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height,
