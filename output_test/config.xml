@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!--
+general struct
+<outputs>
+    <output filename="..." type="...">
+    <output ...
+    ...
+
+output type can have these values:
+ - UNKNOWN
+ - IMAGE
+ - AUDIO
+ - VIDEO
+ - OTHER
+
+-->
+<outputs>
+    <output filename = "output_test/0.bmp" type="IMAGE" />
+    <output filename = "output_test/1.jpg" type="IMAGE" />
+    <output filename = "output_test/2.jpg" type="IMAGE" />
+    <output filename = "output_test/3.png" type="IMAGE" />
+    <output filename = "output_test/4.jpg" type="IMAGE" />
+    <output filename = "output_test/5.jpg" type="IMAGE" />
+    <output filename = "output_test/6.mp3" type="AUDIO" />
+    <output filename = "output_test/7.mp3" type="AUDIO" />
+</outputs>

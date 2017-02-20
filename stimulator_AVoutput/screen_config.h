@@ -4,6 +4,11 @@
 #include <string>
 #include <vector>
 
+#define DEFAULT_FULLSCREEN false
+#define DEFAULT_WIDTH 640
+#define DEFAULT_HEIGHT 480
+#define DEFAULT_TEST_ENABLED false
+
 class ScreenConfig {
 
 public:
@@ -15,9 +20,17 @@ public:
     static const int TYPE_VIDEO = 3;
     static const int TYPE_OTHER = 4;
 
+    static const std::string XML_TYPE_UNKNOWN;
+    static const std::string XML_TYPE_IMAGE;
+    static const std::string XML_TYPE_AUDIO;
+    static const std::string XML_TYPE_VIDEO;
+    static const std::string XML_TYPE_OTHER;
 
-    bool fullscreen;
-    int width,height;
+
+    bool fullscreen = DEFAULT_FULLSCREEN;
+    bool test_enabled = DEFAULT_TEST_ENABLED;
+    int width = DEFAULT_WIDTH;
+    int height = DEFAULT_HEIGHT;
     double volume;
 
 
@@ -29,6 +42,9 @@ public:
     };
 
     std::vector<Output> outputs;
+
+    void load_outputs_xml(char *xml_filename);
+
 
 };
 

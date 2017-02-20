@@ -14,8 +14,8 @@
  * Číslování pinů ve wiring PI odpovídá následujíécím pinům
  * ze schématu níže
 
- *  wiringPi 0 = pin 11 = GPIO 18
- *  wiringPi 1 = pin 12 = GPIO 17
+ *  wiringPi 0 = pin 11 = GPIO 17
+ *  wiringPi 1 = pin 12 = GPIO 18
  *  wiringPi 2 = pin 13 = GPIO 27
  *  wiringPi 3 = pin 15 = GPIO 22
 

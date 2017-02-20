@@ -1,6 +1,7 @@
 
 #include "av_screen.h"
 #include <SDL2/SDL_image.h>
+#include <c++/iostream>
 
 AVScreen::AVScreen() {
     window = SDL_CreateWindow("AVScreen", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height,
@@ -48,6 +49,20 @@ void AVScreen::loadConfig(ScreenConfig *screenConfig) {
                 rect->y = (height - rect->h) / 2;
             }
             SDL_UpperBlitScaled(temp, NULL, images[i], rect);
+            if (screenConfig->test_enabled) {
+                SDL_Surface *white_surface = SDL_CreateRGBSurface(0, 200, 200, 32, 0, 0, 0, 0);
+                SDL_FillRect(white_surface,NULL,0xFFFFFFFF);
+
+                SDL_Rect *white_rect = new SDL_Rect();
+                white_rect->w=200;
+                white_rect->h=200;
+                white_rect->x = images[i]->w - 250;
+                white_rect->y = images[i]->h - 250;
+
+                SDL_BlitSurface(white_surface,NULL,images[i],white_rect);
+                SDL_FreeSurface(white_surface);
+                delete white_rect;
+            }
             SDL_FreeSurface(temp);
             delete rect;
         }
