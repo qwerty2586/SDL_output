@@ -83,7 +83,6 @@ AVScreen::~AVScreen() {
 
     SDL_FreeSurface(surface);
     SDL_DestroyWindow(window);
-    SDL_free(window);
     Mix_CloseAudio();
 
 }
