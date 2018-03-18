@@ -31,11 +31,11 @@ public:
 private:
 
     SDL_Window *window;
-    SDL_Surface *surface;
+    SDL_Renderer *renderer;
     int width = DEFAULT_WIDTH;
     int height = DEFAULT_HEIGHT;
-    SDL_Surface *images[OUTPUT_MAX_COUNT];
     Mix_Music *audios[OUTPUT_MAX_COUNT];
+    SDL_Texture *images[OUTPUT_MAX_COUNT];
     int types[OUTPUT_MAX_COUNT];
     int activeOutput = NO_OUTPUT;
 

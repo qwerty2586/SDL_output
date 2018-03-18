@@ -78,29 +78,36 @@ int main(int argc, char *argv[]) {
         return EXIT_SDL_INIT_ERROR;
     } else {
 
-        int imgFlags = IMG_INIT_JPG + IMG_INIT_PNG;
+        int imgFlags = IMG_INIT_JPG | IMG_INIT_PNG;
 
         if (IMG_Init(imgFlags) & imgFlags) {
+            if(Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) != -1) {
+                int mixFlags = MIX_INIT_OGG | MIX_INIT_MP3 | MIX_INIT_FLAC;
+                int initted=Mix_Init(mixFlags);
 
-            int mixFlags = MIX_INIT_OGG + MIX_INIT_MP3 + MIX_INIT_FLAC;
+                if ((mixFlags&initted) == mixFlags) {
 
-            if (Mix_Init(mixFlags) & mixFlags) {
+                    AVScreen *avScreen = new AVScreen();
 
-                AVScreen *avScreen = new AVScreen();
+                    avScreen->loadConfig(screenConfig);
 
-                avScreen->loadConfig(screenConfig);
+                    testLoop(avScreen);
+                    delete avScreen;
 
-                testLoop(avScreen);
-                delete avScreen;
+                    IMG_Quit();
+                    Mix_Quit();
+                    SDL_Quit();
 
-                IMG_Quit();
-                Mix_Quit();
-                SDL_Quit();
-
+                } else {
+                    std::cout << "SDL_mixer error: " << Mix_GetError() << std::endl;
+                    return EXIT_SDL_MIX_INIT_ERROR;
+                }
             } else {
-                std::cout << "SDL_mixer error: " << Mix_GetError() << std::endl;
+                fprintf(stderr, "Mix_OpenAudio() error: %s\n", SDL_GetError());
                 return EXIT_SDL_MIX_INIT_ERROR;
             }
+
+
         } else {
             std::cout << "SDL_image error: " << IMG_GetError() << std::endl;
             return EXIT_SDL_IMG_INIT_ERROR;
