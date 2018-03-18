@@ -22,7 +22,6 @@ void Events::stop() {
 int Events::get_event() {
     SDL_Event event;
     while(SDL_WaitEvent(&event)){
-        std::cout << ".";
         if(event.type == SDL_QUIT  ||  event.key.keysym.scancode == KEY_EXIT_SCANCODE) {
             return EVENT_CODES::EXIT_KEY;
             break;
