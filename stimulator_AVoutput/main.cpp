@@ -74,7 +74,7 @@ int main(int argc, char *argv[]) {
     screenConfig->load_outputs_xml(config_filename); // nacte z XML
 
     if (SDL_Init(SDL_INIT_EVERYTHING) == -1) {
-        std::cout << "Something went wrong!" << SDL_GetError() << std::endl;
+        std::cout << "SDL error: " << SDL_GetError() << std::endl;
         return EXIT_SDL_INIT_ERROR;
     } else {
 
@@ -98,9 +98,11 @@ int main(int argc, char *argv[]) {
                 SDL_Quit();
 
             } else {
+                std::cout << "SDL_mixer error: " << Mix_GetError() << std::endl;
                 return EXIT_SDL_MIX_INIT_ERROR;
             }
         } else {
+            std::cout << "SDL_image error: " << IMG_GetError() << std::endl;
             return EXIT_SDL_IMG_INIT_ERROR;
         }
     }
