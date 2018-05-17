@@ -7,9 +7,10 @@
 AVScreen::AVScreen(int width, int height, bool fullscreen) {
     this->width = width;
     this->height = height;
-    Uint32 flags = fullscreen? SDL_WINDOW_FULLSCREEN : 0;
+    Uint32 flags = fullscreen? SDL_WINDOW_FULLSCREEN_DESKTOP : 0;
     window = SDL_CreateWindow("SDL_output", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height,flags);
-    renderer = SDL_CreateRenderer(window,-1,0);
+    renderer = SDL_CreateRenderer(window,-1,SDL_RENDERER_SOFTWARE);
+    surface = SDL_GetWindowSurface(window);
 
 }
 
@@ -20,6 +21,7 @@ void AVScreen::loadConfig(ScreenConfig *screenConfig) {
     for (int i = 0; i < OUTPUT_MAX_COUNT; ++i) {
         audios[i] = NULL;
         images[i] = NULL;
+        images_s[i] = nullptr;
     }
 
     int length = screenConfig->outputs.size();
@@ -34,7 +36,7 @@ void AVScreen::loadConfig(ScreenConfig *screenConfig) {
                 SDL_FillRect(img, NULL, SDL_MapRGB(img->format, 255, 0, 0));
                 SDL_FillRect(img, NULL, SDL_MapRGB(img->format, 255, 0, 0));
             }
-            SDL_Surface *temp = SDL_CreateRGBSurface(0, width, height, 32, 0, 0, 0, 0);
+            SDL_Surface *temp = SDL_CreateRGBSurface(0, width, height, 24, 0, 0, 0, 0);
             double ratio = (double) img->w / (double) img->h;
             double screenRatio = (double) width / (double) height;
             SDL_Rect *rect = new SDL_Rect();
@@ -64,6 +66,8 @@ void AVScreen::loadConfig(ScreenConfig *screenConfig) {
                 SDL_FreeSurface(white_surface);
                 delete white_rect;
             }
+            images_s[i] = SDL_CreateRGBSurface(0,width,height,32,0,0,0,0);
+            SDL_BlitSurface(temp, nullptr,images_s[i], nullptr);
             images[i] = SDL_CreateTextureFromSurface(renderer,temp);
             SDL_FreeSurface(img);
             SDL_FreeSurface(temp);
@@ -106,8 +110,11 @@ void AVScreen::activateOutput(int index) {
             //Mix_PauseMusic();
         }
     } else if (types[index] == ScreenConfig::TYPE_IMAGE) {
-        SDL_RenderCopy(renderer,images[index],NULL,NULL);
-        SDL_RenderPresent(renderer);
+        SDL_BlitSurface(images_s[index], nullptr,surface, nullptr);
+        //SDL_UpdateWindowSurface(window);
+        //SDL_RendererFlip();
+        //SDL_RenderCopy(renderer,images[index],NULL,NULL);
+       SDL_RenderPresent(renderer);
     } else if (types[index] == ScreenConfig::TYPE_AUDIO) {
         if (!audios[index]) {
             Mix_FadeOutMusic(0);

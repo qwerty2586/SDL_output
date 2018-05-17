@@ -32,10 +32,12 @@ private:
 
     SDL_Window *window;
     SDL_Renderer *renderer;
+    SDL_Surface *surface;
     int width = DEFAULT_WIDTH;
     int height = DEFAULT_HEIGHT;
     Mix_Music *audios[OUTPUT_MAX_COUNT];
     SDL_Texture *images[OUTPUT_MAX_COUNT];
+    SDL_Surface *images_s[OUTPUT_MAX_COUNT];
     int types[OUTPUT_MAX_COUNT];
     int activeOutput = NO_OUTPUT;
 
