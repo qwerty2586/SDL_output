@@ -18,7 +18,7 @@
 
 class AVScreen  {
 public:
-    explicit AVScreen();
+    explicit AVScreen(int width=DEFAULT_WIDTH, int height=DEFAULT_HEIGHT, bool fullscreen=true);
     ~AVScreen();
     /// nacteni konfigurace, seznamu vstupu, rozliseni, etc.
     void loadConfig(ScreenConfig *screenConfig);

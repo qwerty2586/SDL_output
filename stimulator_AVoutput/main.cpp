@@ -87,12 +87,12 @@ int main(int argc, char *argv[]) {
 
                 if ((mixFlags&initted) == mixFlags) {
 
-                    AVScreen *avScreen = new AVScreen();
-
+                    AVScreen *avScreen = new AVScreen(screenConfig->width,screenConfig->height,screenConfig->fullscreen);
                     avScreen->loadConfig(screenConfig);
 
                     testLoop(avScreen);
                     delete avScreen;
+                    delete screenConfig;
 
                     IMG_Quit();
                     Mix_Quit();

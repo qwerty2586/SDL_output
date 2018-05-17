@@ -1,28 +1,24 @@
 
 #include "av_screen.h"
 #include <SDL2/SDL_image.h>
+#include <iostream>
 
 
-AVScreen::AVScreen() {
-    window = SDL_CreateWindow("SDL_output", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height,
-                              SDL_WINDOW_OPENGL);
+AVScreen::AVScreen(int width, int height, bool fullscreen) {
+    Uint32 flags = fullscreen? SDL_WINDOW_OPENGL|SDL_WINDOW_FULLSCREEN : SDL_WINDOW_OPENGL;
+
+    window = SDL_CreateWindow("SDL_output", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height,flags);
     renderer = SDL_CreateRenderer(window,-1,0);
 
 }
 
 void AVScreen::loadConfig(ScreenConfig *screenConfig) {
-    width = screenConfig->width;
-    height = screenConfig->height;
-    SDL_SetWindowSize(window, width, height);
-    if (screenConfig->fullscreen)
-        SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
-    else
-        SDL_SetWindowFullscreen(window, 0);
-    clearScreen();
 
+    clearScreen();
+    
     for (int i = 0; i < OUTPUT_MAX_COUNT; ++i) {
         audios[i] = NULL;
-        images[i] =NULL;
+        images[i] = NULL;
     }
 
     int length = screenConfig->outputs.size();
@@ -31,6 +27,12 @@ void AVScreen::loadConfig(ScreenConfig *screenConfig) {
         types[i] = screenConfig->outputs[i].type;
         if (types[i] == ScreenConfig::TYPE_IMAGE) {
             SDL_Surface *img = IMG_Load(screenConfig->outputs[i].filename.c_str());
+            if (!img) {
+                std::cout << "IMG_Load error: " << IMG_GetError() << std::endl;
+                img = SDL_CreateRGBSurface(0,width,height,32,0,0,0,0);
+                SDL_FillRect(img, NULL, SDL_MapRGB(img->format, 255, 0, 0));
+                SDL_FillRect(img, NULL, SDL_MapRGB(img->format, 255, 0, 0));
+            }
             SDL_Surface *temp = SDL_CreateRGBSurface(0, width, height, 32, 0, 0, 0, 0);
             double ratio = (double) img->w / (double) img->h;
             double screenRatio = (double) width / (double) height;
@@ -68,6 +70,9 @@ void AVScreen::loadConfig(ScreenConfig *screenConfig) {
         }
         if (types[i] == ScreenConfig::TYPE_AUDIO) {
             audios[i] = Mix_LoadMUS(screenConfig->outputs[i].filename.c_str());
+            if (!audios[i]) {
+                std::cout << "Mix_LoadMUS error: " << Mix_GetError() << std::endl;
+            }
         }
 
     }
@@ -103,7 +108,11 @@ void AVScreen::activateOutput(int index) {
         SDL_RenderCopy(renderer,images[index],NULL,NULL);
         SDL_RenderPresent(renderer);
     } else if (types[index] == ScreenConfig::TYPE_AUDIO) {
-        Mix_PlayMusic(audios[index], 1);
+        if (!audios[index]) {
+            Mix_FadeOutMusic(0);
+        } else {
+            Mix_PlayMusic(audios[index], 1);
+        }
     }
     activeOutput = index;
 
