@@ -31,6 +31,7 @@ public:
     bool test_enabled = DEFAULT_TEST_ENABLED;
     int width = DEFAULT_WIDTH;
     int height = DEFAULT_HEIGHT;
+    bool hw = true;
     double volume;
 
 

@@ -18,7 +18,7 @@
 
 class AVScreen  {
 public:
-    explicit AVScreen(int width=DEFAULT_WIDTH, int height=DEFAULT_HEIGHT, bool fullscreen=true);
+    explicit AVScreen(int width, int height, bool fullscreen = true, bool hw = true);
     ~AVScreen();
     /// nacteni konfigurace, seznamu vstupu, rozliseni, etc.
     void loadConfig(ScreenConfig *screenConfig);
@@ -37,9 +37,10 @@ private:
     int height = DEFAULT_HEIGHT;
     Mix_Music *audios[OUTPUT_MAX_COUNT];
     SDL_Texture *images[OUTPUT_MAX_COUNT];
-    SDL_Surface *images_s[OUTPUT_MAX_COUNT];
+    SDL_Surface *images_s[OUTPUT_MAX_COUNT]; // only for sw renderer
     int types[OUTPUT_MAX_COUNT];
     int activeOutput = NO_OUTPUT;
+    bool hw = true;
 
 };
 

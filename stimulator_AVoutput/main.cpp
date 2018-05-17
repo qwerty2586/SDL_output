@@ -28,6 +28,7 @@ static struct option longOpts[] = {
         {"height",     required_argument, NULL, 'y'},
         {"config",     required_argument, NULL, 'c'},
         {"test",       no_argument,       NULL,  't'},
+        {"sw",         no_argument,       NULL, 's'},
         {"help",       no_argument,       NULL, 'h'},
         {NULL,         no_argument,       NULL, 0}
 };
@@ -40,7 +41,7 @@ int main(int argc, char *argv[]) {
     ScreenConfig *screenConfig = new ScreenConfig();
     int c;
     char *config_filename = NULL;
-    while ((c = getopt_long(argc, argv, "fwx:y:c:th", longOpts, NULL)) != -1) {
+    while ((c = getopt_long(argc, argv, "fwx:y:c:tsh", longOpts, NULL)) != -1) {
         switch (c) {
             case 'f':
                 screenConfig->fullscreen = true;
@@ -59,6 +60,9 @@ int main(int argc, char *argv[]) {
                 break;
             case 't' :
                 screenConfig->test_enabled = true;
+                break;
+            case 's' :
+                screenConfig->hw = false;
                 break;
             case 'h': // print help;
                 break;
@@ -87,7 +91,8 @@ int main(int argc, char *argv[]) {
 
                 if ((mixFlags&initted) == mixFlags) {
 
-                    AVScreen *avScreen = new AVScreen(screenConfig->width,screenConfig->height,screenConfig->fullscreen);
+                    AVScreen *avScreen = new AVScreen(screenConfig->width, screenConfig->height,
+                                                      screenConfig->fullscreen, screenConfig->hw);
                     avScreen->loadConfig(screenConfig);
 
                     testLoop(avScreen);
