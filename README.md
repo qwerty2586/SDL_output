@@ -1,3 +1,12 @@
+Tento program slouzi k rozsireni programu stimulator_control o obrazovy a zvukovy vystup
+
+Balicky potrebne ke kompilaci na raspbian stretch
+
+```
+sudo apt-get install libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev cmake
+```
+
+
 # Result 2016
 
 ## SDL_output
@@ -26,6 +35,9 @@
    - odeslat miniaturu obrazku
    - prijmout konfiguraci ve formatu XML pro SDL_output a spustit SDL_output
  
- ## celek
+## celek
  - vytvorit komunikacni protokol mezi Androidem a Raspberry
  - limitace obou procesu na konktretni cpu https://linux.die.net/man/2/sched_setaffinity
+
+# Roadmap 2018
+
