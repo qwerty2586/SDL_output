@@ -5,8 +5,9 @@
 
 
 AVScreen::AVScreen(int width, int height, bool fullscreen) {
-    Uint32 flags = fullscreen? SDL_WINDOW_OPENGL|SDL_WINDOW_FULLSCREEN : SDL_WINDOW_OPENGL;
-
+    this->width = width;
+    this->height = height;
+    Uint32 flags = fullscreen? SDL_WINDOW_FULLSCREEN : 0;
     window = SDL_CreateWindow("SDL_output", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height,flags);
     renderer = SDL_CreateRenderer(window,-1,0);
 
